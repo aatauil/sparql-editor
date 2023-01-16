@@ -4,7 +4,7 @@
   "description": "Sparql Editor based on CodeMirror",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack build --watch"
   },
   "author": "",
   "license": "MIT",
