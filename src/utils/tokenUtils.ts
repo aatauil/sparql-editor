@@ -1,5 +1,3 @@
-import { default as Yasqe, Token, Position } from "./";
-
 /**
  * When typing a query, this query is sometimes syntactically invalid, causing
  * the current tokens to be incorrect This causes problem for autocompletion.
@@ -7,18 +5,18 @@ import { default as Yasqe, Token, Position } from "./";
  * these
  */
 
-export function getCompleteToken(yasqe: Yasqe, token?: Token, cur?: Position): Token {
+export function getCompleteToken(editor, token?, cur?) {
   if (!cur) {
-    cur = yasqe.getDoc().getCursor() as Position;
+    cur = editor.getDoc().getCursor();
   }
   if (!token) {
-    token = yasqe.getTokenAt(cur) as Token;
+    token = editor.getTokenAt(cur);
   }
 
-  return expandTokenToEnd(yasqe, expandTokenToStart(yasqe, token, cur), cur);
+  return expandTokenToEnd(editor, expandTokenToStart(editor, token, cur), cur);
 }
-function expandTokenToStart(yasqe: Yasqe, token: Token, cur: Position): Token {
-  var prevToken: Token = yasqe.getTokenAt({
+function expandTokenToStart(editor, token, cur) {
+  var prevToken = editor.getTokenAt({
     line: cur.line,
     ch: token.start,
   });
@@ -36,7 +34,7 @@ function expandTokenToStart(yasqe: Yasqe, token: Token, cur: Position): Token {
   if (prevToken.type != null && prevToken.type != "ws" && token.type != null && token.type != "ws") {
     token.start = prevToken.start;
     token.string = prevToken.string + token.string;
-    return expandTokenToStart(yasqe, token, {
+    return expandTokenToStart(editor, token, {
       line: cur.line,
       ch: prevToken.start,
     }); // recursively, might have multiple tokens which it should include
@@ -50,7 +48,7 @@ function expandTokenToStart(yasqe: Yasqe, token: Token, cur: Position): Token {
   }
 }
 
-function expandTokenToEnd(yasqe: Yasqe, token: Token, cur: Position): Token {
+function expandTokenToEnd(editor, token, cur) {
   if (token.string.indexOf(" ") >= 0) {
     /**
      * This is most likely a query ending with `<http://www.opengis.net/ont/geosparql# ?a`
@@ -64,7 +62,7 @@ function expandTokenToEnd(yasqe: Yasqe, token: Token, cur: Position): Token {
   }
   if (!token.type) return token;
 
-  var nextToken: Token = yasqe.getTokenAt({
+  var nextToken = editor.getTokenAt({
     line: cur.line,
     ch: token.end + 1,
   });
@@ -82,7 +80,7 @@ function expandTokenToEnd(yasqe: Yasqe, token: Token, cur: Position): Token {
   ) {
     token.end = nextToken.end;
     token.string = token.string + nextToken.string;
-    return expandTokenToEnd(yasqe, token, {
+    return expandTokenToEnd(editor, token, {
       line: cur.line,
       ch: nextToken.end,
     }); // recursively, might have multiple tokens which it should include
@@ -95,19 +93,19 @@ function expandTokenToEnd(yasqe: Yasqe, token: Token, cur: Position): Token {
     return token;
   }
 }
-export function getPreviousNonWsToken(yasqe: Yasqe, line: number, token: Token): Token {
-  var previousToken = yasqe.getTokenAt({
+export function getPreviousNonWsToken(editor, line: number, token) {
+  var previousToken = editor.getTokenAt({
     line: line,
     ch: token.start,
   });
   if (previousToken != null && previousToken.type == "ws") {
-    previousToken = getPreviousNonWsToken(yasqe, line, previousToken);
+    previousToken = getPreviousNonWsToken(editor, line, previousToken);
   }
   return previousToken;
 }
-export function getNextNonWsToken(yasqe: Yasqe, lineNumber: number, charNumber?: number): Token | undefined {
+export function getNextNonWsToken(editor, lineNumber: number, charNumber?: number) {
   if (charNumber == undefined) charNumber = 1;
-  var token = yasqe.getTokenAt({
+  var token = editor.getTokenAt({
     line: lineNumber,
     ch: charNumber,
   });
@@ -115,7 +113,7 @@ export function getNextNonWsToken(yasqe: Yasqe, lineNumber: number, charNumber?:
     return undefined;
   }
   if (token.type == "ws") {
-    return getNextNonWsToken(yasqe, lineNumber, token.end + 1);
+    return getNextNonWsToken(editor, lineNumber, token.end + 1);
   }
   return token;
 }

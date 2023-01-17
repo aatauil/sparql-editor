@@ -32,7 +32,7 @@ SELECT * WHERE {
     tabMode: "indent",
     lineNumbers: true,
     lineWrapping: true,
-    lint: {highlightLines: true}
+    lint: {highlightLines: true},
     foldGutter: {
       rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.brace, CodeMirror.fold.prefix),
     },

@@ -4,28 +4,28 @@ import CodeMirror from "codemirror";
 import * as TokenUtils from "../utils/tokenUtils";
 const PREFIX_KEYWORD = "PREFIX ";
 
-export function findFirstPrefixLine(yasqe: Yasqe) {
-  var lastLine = yasqe.getDoc().lastLine();
+export function findFirstPrefixLine(editor) {
+  var lastLine = editor.getDoc().lastLine();
   for (var i = 0; i <= lastLine; ++i) {
-    const firstPrefix = findFirstPrefix(yasqe, i);
+    const firstPrefix = findFirstPrefix(editor, i);
     if (firstPrefix != null && firstPrefix >= 0) {
       return i;
     }
   }
 }
 
-export function findFirstPrefix(yasqe: Yasqe, line: number, startFromCharIndex = 0, lineText?: string) {
-  if (!lineText) lineText = yasqe.getDoc().getLine(line);
+export function findFirstPrefix(editor, line: number, startFromCharIndex = 0, lineText?: string) {
+  if (!lineText) lineText = editor.getDoc().getLine(line);
   lineText = lineText.toUpperCase();
   const charIndex = lineText.indexOf(PREFIX_KEYWORD, startFromCharIndex);
   if (charIndex >= 0) {
-    const tokenType = yasqe.getTokenTypeAt(CodeMirror.Pos(line, charIndex + 1));
+    const tokenType = editor.getTokenTypeAt(CodeMirror.Pos(line, charIndex + 1));
     if (tokenType === "keyword") {
       return charIndex;
     }
   }
 }
-export default function (editor, start: Position) {
+export default function (editor, start) {
   var line = start.line,
     lineText = editor.getDoc().getLine(line);
 

@@ -1,5 +1,4 @@
 import CodeMirror from "codemirror";
-import {syntaxTree} from "@codemirror/language"
 var SparqlParser = require('sparqljs').Parser;
 var parser = new SparqlParser();
 
@@ -16,7 +15,7 @@ export function linter(text, options, cm) {
       to: CodeMirror.Pos(hash.loc.last_line - 1, hash.loc.last_column),
       message: err.message,
       severity : "error"
-    };)
+    })
   }
   
   return issues
