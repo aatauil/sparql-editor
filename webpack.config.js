@@ -30,9 +30,6 @@ module.exports = {
         exclude: [/node_modules/, /test/],
         use: [
           {
-            loader: "swc-loader"
-          },
-          {
             loader: 'ts-loader',
           },
         ],
