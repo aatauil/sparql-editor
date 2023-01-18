@@ -1,6 +1,6 @@
 {
   "name": "sparql-editor",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "description": "Sparql Editor based on CodeMirror",
   "main": "index.js",
   "scripts": {
