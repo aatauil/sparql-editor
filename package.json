@@ -1,10 +1,11 @@
 {
   "name": "sparql-editor",
-  "version": "0.0.1",
+  "version": "0.0.2-alpha",
   "description": "Sparql Editor based on CodeMirror",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack build --watch"
+    "dev": "webpack build --watch",
+    "build": "NODE_ENV=production webpack --config ./webpack.config"
   },
   "author": "",
   "license": "MIT",
