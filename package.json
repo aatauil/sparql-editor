@@ -1,6 +1,6 @@
 {
   "name": "sparql-editor",
-  "version": "0.0.4-alpha",
+  "version": "0.0.3-alpha",
   "description": "Sparql Editor based on CodeMirror",
   "main": "dist/index.js",
   "scripts": {
@@ -19,7 +19,8 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "codemirror": "^5.65.11",
+    "@codemirror/legacy-modes": "^6.3.1",
+    "codemirror": "^6.0.1",
     "sparqljs": "^3.6.2"
   }
 }
