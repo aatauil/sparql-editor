@@ -1,15 +1,15 @@
 import CodeMirror from "codemirror";
 var SparqlParser = require('sparqljs').Parser;
 var parser = new SparqlParser();
-import { Diagnostic } from "@codemirror/lint";
+import { Diagnostic, LintSource } from "@codemirror/lint";
 
 function pos(editor, { line, ch }) {
   const doc = editor.state.doc;
   return doc.line(line + 1).from + ch
 }
 
-export function sparqlLinter(editor, options) {
-  const diagnostics: Diagnostic[] = [];
+export function sparqlLinter<LintSource>(editor) {
+  const diagnostics = [];
   const value = editor.state.doc.toString();
 
   try {

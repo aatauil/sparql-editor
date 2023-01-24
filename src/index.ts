@@ -6,18 +6,18 @@ import { highlightSelectionMatches } from "@codemirror/search";
 import {autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete"
 
 import { sparql } from "@codemirror/legacy-modes/mode/sparql";
-import { linter, lintGutter } from "@codemirror/lint";
+import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
 
 const extentions = [
-  keymap.of(
+  keymap.of([
     indentWithTab
-  ), 
+  ]), 
   lineNumbers(),
   StreamLanguage.define(sparql),
   syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
   closeBrackets(),
-  linter(sparqlLinter),
+  linter(sparqlLinter<LintSource>),
   lintGutter(),
   highlightActiveLine(),
   highlightSelectionMatches(),
