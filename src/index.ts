@@ -10,7 +10,9 @@ import { linter, lintGutter } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
 
 const extentions = [
-  keymap.of(defaultKeymap, indentWithTab), 
+  keymap.of(
+    indentWithTab
+  ), 
   lineNumbers(),
   StreamLanguage.define(sparql),
   syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
