@@ -11,8 +11,8 @@
   <div id="editor"></div>
   <script src="../dist/index.js"></script>
   <script>       
-      const { SparqlEditor } = window.sparqlEditor;
-      const editor = SparqlEditor(document.getElementById("editor"));
+      const { view, state } = window.sparqlEditor;
+      const editor = view(document.getElementById("editor"));
   </script>
 </body>
 </html>
