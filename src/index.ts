@@ -9,7 +9,7 @@ import { sparql } from "@codemirror/legacy-modes/mode/sparql";
 import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
 
-const extentions = [
+const defaultExtentions = [
   keymap.of([
     indentWithTab
   ]), 
@@ -25,16 +25,22 @@ const extentions = [
   foldGutter(),
 ]
 
-export function view(element) {
-
-  return new EditorView({
-    doc: `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT * WHERE {
   ?sub ?pred ?obj .
-} LIMIT 10`,
-    parent: element,
-    extensions: extentions
-  })
+ } LIMIT 10`
+
+export class SparqlEditor extends EditorView {
+  constructor({ parent, onChange, doc = defaultDoc }) {
+    super({
+        parent: parent, 
+        doc: doc,
+        extensions: [ 
+          ...defaultExtentions,
+          EditorView.updateListener.of(onChange)
+        ]
+    })
+  }
 }
