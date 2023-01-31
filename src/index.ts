@@ -12,6 +12,7 @@ import { sparqlLinter } from "./extentions/sparql-linter";
 const defaultExtentions = [
   keymap.of([
     indentWithTab
+    ...historyKeymap
   ]), 
   lineNumbers(),
   StreamLanguage.define(sparql),
@@ -23,6 +24,7 @@ const defaultExtentions = [
   highlightSelectionMatches(),
   bracketMatching(),
   foldGutter(),
+  history()
 ]
 
 const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
