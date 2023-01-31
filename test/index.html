@@ -11,8 +11,18 @@
   <div id="editor"></div>
   <script src="../dist/index.js"></script>
   <script>       
-      const { view, state } = window.sparqlEditor;
-      const editor = view(document.getElementById("editor"));
+      const { createSparqlEditor } = window.sparqlEditor;
+      const editor = createSparqlEditor({
+        parent: document.getElementById("editor"),
+        onChange: onChange
+      });
+
+      function onChange(e) {
+        console.log(e)
+      }
+      
+      console.log(editor)
+
   </script>
 </body>
 </html>

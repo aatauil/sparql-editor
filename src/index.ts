@@ -11,7 +11,7 @@ import { sparqlLinter } from "./extentions/sparql-linter";
 
 const defaultExtentions = [
   keymap.of([
-    indentWithTab
+    indentWithTab,
     ...historyKeymap
   ]), 
   lineNumbers(),
@@ -34,15 +34,23 @@ SELECT * WHERE {
   ?sub ?pred ?obj .
  } LIMIT 10`
 
-export class SparqlEditor extends EditorView {
-  constructor({ parent, onChange, doc = defaultDoc }) {
-    super({
-        parent: parent, 
-        doc: doc,
-        extensions: [ 
-          ...defaultExtentions,
-          EditorView.updateListener.of(onChange)
-        ]
-    })
+export function createSparqlEditor({ parent, onChange, value }) {
+  const extensions = [defaultExtentions]
+  const doc = value || defaultDoc;
+
+  if(onChange === 'function') {
+    const updateListener = EditorView.updateListener.of((viewUpdate) => {
+      if (viewUpdate.docChanged && typeof onChange === 'function') {
+        const doc = viewUpdate.state.doc;
+        const value = doc.toString();
+        onChange(value, viewUpdate);
+      }
+    });
+  
+    extensions.push(updateListener)
   }
+
+
+
+  return new EditorView({ parent, doc, extensions })
 }
