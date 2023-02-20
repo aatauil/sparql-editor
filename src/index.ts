@@ -37,7 +37,7 @@ SELECT * WHERE {
  } LIMIT 10`
 
 export function createSparqlEditor({ parent, onChange, value }) {
-  const extensions = [defaultExtentions]
+  const extensions: [any] = [ defaultExtentions] 
   const doc = value || defaultDoc;
 
   if(onChange === 'function') {
