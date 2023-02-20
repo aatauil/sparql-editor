@@ -40,7 +40,7 @@ export function createSparqlEditor({ parent, onChange, value }) {
   const extensions: [any] = [ defaultExtentions] 
   const doc = value || defaultDoc;
 
-  if(onChange === 'function') {
+  if(typeof onChange === 'function') {
     const updateListener = EditorView.updateListener.of((viewUpdate) => {
       if (viewUpdate.docChanged && typeof onChange === 'function') {
         const doc = viewUpdate.state.doc;
