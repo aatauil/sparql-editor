@@ -12,7 +12,7 @@ import { sparqlLinter } from "./extentions/sparql-linter";
 const defaultExtentions = [
   keymap.of([
     indentWithTab,
-    ...searchKeymap
+    ...searchKeymap,
     ...historyKeymap
   ]), 
   lineNumbers(),
