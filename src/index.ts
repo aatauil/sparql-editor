@@ -2,7 +2,7 @@ import { EditorState } from "@codemirror/state";
 import { EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter } from "@codemirror/view";
 import { defaultKeymap, indentWithTab, history, historyKeymap } from "@codemirror/commands";
 import { StreamLanguage, defaultHighlightStyle, syntaxHighlighting, bracketMatching, foldGutter } from "@codemirror/language";
-import { highlightSelectionMatches } from "@codemirror/search";
+import { highlightSelectionMatches, searchKeymap, search } from "@codemirror/search";
 import {autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete"
 
 import { sparql } from "@codemirror/legacy-modes/mode/sparql";
@@ -12,6 +12,7 @@ import { sparqlLinter } from "./extentions/sparql-linter";
 const defaultExtentions = [
   keymap.of([
     indentWithTab,
+    ...searchKeymap
     ...historyKeymap
   ]), 
   lineNumbers(),
@@ -24,7 +25,8 @@ const defaultExtentions = [
   highlightSelectionMatches(),
   bracketMatching(),
   foldGutter(),
-  history()
+  history(),
+  search({ top: true })
 ]
 
 const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
