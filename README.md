@@ -1,7 +1,7 @@
 <p align="center">
     <img src="https://user-images.githubusercontent.com/52280338/222252617-f86be28d-f2f3-4871-a0bf-00e7c42080fa.png" alt="mu-node-authentication" />
 </p>
-<h1 align="center">Sparql Editor [alpha]</h1>
+<h1 align="center">Sparql Editor</h1>
 <h2 align="center">Sparql Editor based on CodeMirror 6</h2>
 
 <p align="center">
