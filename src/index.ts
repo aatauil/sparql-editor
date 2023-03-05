@@ -1,32 +1,23 @@
 import { EditorState } from "@codemirror/state";
-import { EditorView, keymap, lineNumbers, highlightActiveLine, highlightActiveLineGutter } from "@codemirror/view";
-import { defaultKeymap, indentWithTab, history, historyKeymap } from "@codemirror/commands";
-import { StreamLanguage, defaultHighlightStyle, syntaxHighlighting, bracketMatching, foldGutter } from "@codemirror/language";
-import { highlightSelectionMatches, searchKeymap, search } from "@codemirror/search";
-import {autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete"
+import { EditorView, keymap } from "@codemirror/view";
+import { indentWithTab } from "@codemirror/commands";
+import { foldGutter } from "@codemirror/language";
+import { search } from "@codemirror/search";
 
-import { sparql } from "@codemirror/legacy-modes/mode/sparql";
 import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
+import { sparql } from "codemirror-lang-sparql";
+import { basicSetup } from "codemirror";
 
 const defaultExtentions = [
+  basicSetup,
   keymap.of([
-    indentWithTab,
-    ...searchKeymap,
-    ...historyKeymap
-  ]), 
-  lineNumbers(),
-  StreamLanguage.define(sparql),
-  syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
-  closeBrackets(),
-  linter(sparqlLinter<LintSource>),
+    indentWithTab
+  ]),
+  sparql(),
+  search({ top: true }),
   lintGutter(),
-  highlightActiveLine(),
-  highlightSelectionMatches(),
-  bracketMatching(),
-  foldGutter(),
-  history(),
-  search({ top: true })
+  linter(sparqlLinter<LintSource>),
 ]
 
 const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
