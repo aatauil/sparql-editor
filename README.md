@@ -23,6 +23,7 @@
 - 📔 History 
 - 💢 Linting
 - 🔎 Search
+- ℹ️ tooltip 
 
 # :open_book: Documentation
 ## Usage recommendation
