@@ -1,13 +1,16 @@
-import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
-import { foldGutter } from "@codemirror/language";
 import { search } from "@codemirror/search";
-
 import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
 import { sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
+
+type Props = {
+  parent: HTMLElement,
+  onChange: Function,
+  value: string
+}
 
 const defaultExtentions = [
   basicSetup,
@@ -27,8 +30,9 @@ SELECT * WHERE {
   ?sub ?pred ?obj .
  } LIMIT 10`
 
-export function createSparqlEditor({ parent, onChange, value }) {
-  const extensions: [any] = [ defaultExtentions] 
+
+export function createSparqlEditor({ parent, onChange, value }: Props): EditorView {
+  const extensions: [any] = [ defaultExtentions ] 
   const doc = value || defaultDoc;
 
   if(typeof onChange === 'function') {
@@ -42,8 +46,6 @@ export function createSparqlEditor({ parent, onChange, value }) {
   
     extensions.push(updateListener)
   }
-
-
 
   return new EditorView({ parent, doc, extensions })
 }
