@@ -1,7 +1,7 @@
 {
   "name": "sparql-editor",
-  "version": "0.1.0",
-  "description": "Sparql Editor based on CodeMirror",
+  "version": "0.2.0",
+  "description": "Sparql Editor based on CodeMirror 6",
   "main": "dist/index.js",
   "scripts": {
     "dev": "webpack build --watch",
