@@ -9,7 +9,7 @@
     "removeComments": true,
     "sourceMap": false,
     "outDir": "dist/",
-    "baseUrl": "./"
+    "baseUrl": "src"
   },
   "include": ["src/**/*"],
 }
