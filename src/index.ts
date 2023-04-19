@@ -5,6 +5,7 @@ import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
 import { sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
+import { wordHover } from "./extentions/tooltip";
 
 type Props = {
   parent: HTMLElement,
@@ -45,6 +46,7 @@ export function createSparqlEditor({ parent, onChange, value }: Props): EditorVi
     });
   
     extensions.push(updateListener)
+    extensions.push(wordHover)
   }
 
   return new EditorView({ parent, doc, extensions })
