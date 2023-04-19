@@ -10,6 +10,7 @@
   "author": "Achraf Atauil",
   "license": "MIT",
   "devDependencies": {
+    "@types/codemirror": "^5.60.7",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "style-loader": "^3.3.1",
