@@ -27,7 +27,7 @@
 
 # :open_book: Documentation
 ## Usage recommendation
-Currently its not adviced to use this editor in production as it is in early development. It will still change a lot and releases can have bugs therefor when using this library in a project, make sure to fix the version and manualy check the commit history before upgrading.
+Editor is still in early development but should be stable. Currently it is being used by the [sparql-browser-extension](https://github.com/aatauil/sparql-browser-extension). It returns a Codemirror 6 EditorView instance. So you can manipulate the editor as documented in the [codemirror documentation](https://codemirror.net/docs/ref/)  
 
 
 ## Description
