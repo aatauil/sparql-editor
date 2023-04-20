@@ -5,7 +5,7 @@ import { dictionary  } from "../data";
 export const wordHover = hoverTooltip((view, pos, side) => {
   const tree = syntaxTree(view.state);
   const cursor = tree.cursorAt(pos);
-  const selectionName = cursor.type.name.toUpperCase();
+  const selectionName = cursor.type.name;
 
   if (!(selectionName in dictionary)) return;
 
