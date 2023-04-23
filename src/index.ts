@@ -3,15 +3,20 @@ import { indentWithTab } from "@codemirror/commands";
 import { search } from "@codemirror/search";
 import { linter, lintGutter, LintSource } from "@codemirror/lint";
 import { sparqlLinter } from "./extentions/sparql-linter";
-import { sparql } from "codemirror-lang-sparql";
+import { SparqlLanguage, sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
 import { wordHover } from "./extentions/tooltip";
+import { completions } from "./extentions/completions";
 
 type Props = {
   parent: HTMLElement,
   onChange: Function,
   value: string
 }
+
+const sparqlCompletions = SparqlLanguage.data.of({
+  autocomplete: completions
+})
 
 const defaultExtentions = [
   basicSetup,
@@ -22,6 +27,7 @@ const defaultExtentions = [
   search({ top: true }),
   lintGutter(),
   linter(sparqlLinter<LintSource>),
+  sparqlCompletions
 ]
 
 const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
