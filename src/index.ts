@@ -6,7 +6,7 @@ import { sparqlLinter } from "./extentions/sparql-linter";
 import { SparqlLanguage, sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
 import { wordHover } from "./extentions/tooltip";
-import { completions } from "./extentions/completions";
+import { keywordCompletionSource, localCompletionSource } from "./extentions/complete";
 
 type Props = {
   parent: HTMLElement,
@@ -14,8 +14,12 @@ type Props = {
   value: string
 }
 
-const sparqlCompletions = SparqlLanguage.data.of({
-  autocomplete: completions
+const sparqlKeywordCompletions = SparqlLanguage.data.of({
+  autocomplete: keywordCompletionSource
+})
+
+const sparqlLocalCompletions = SparqlLanguage.data.of({
+  autocomplete: localCompletionSource
 })
 
 const defaultExtentions = [
@@ -27,15 +31,17 @@ const defaultExtentions = [
   search({ top: true }),
   lintGutter(),
   linter(sparqlLinter<LintSource>),
-  sparqlCompletions
+  sparqlKeywordCompletions,
+  sparqlLocalCompletions
 ]
 
 const defaultDoc = `PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT * WHERE {
+SELECT ?s ?p ?o WHERE {
   ?sub ?pred ?obj .
- } LIMIT 10`
+ } LIMIT 10
+ `
 
 
 export function createSparqlEditor({ parent, onChange, value }: Props): EditorView {
