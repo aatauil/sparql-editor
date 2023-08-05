@@ -27,7 +27,7 @@
 
 # :open_book: Documentation
 ## Usage recommendation
-Editor is still in early development but should be stable. Currently it is being used by the [sparql-browser-extension](https://github.com/aatauil/sparql-browser-extension). It returns a Codemirror 6 EditorView instance. So you can manipulate the editor as documented in the [codemirror documentation](https://codemirror.net/docs/ref/)  
+Editor is stable. Currently it is being used by the [sparql-browser-extension](https://github.com/aatauil/sparql-browser-extension). It returns a Codemirror 6 EditorView instance. So you can manipulate the editor as documented in the [codemirror documentation](https://codemirror.net/docs/ref/)  
 
 
 ## Description
@@ -74,10 +74,10 @@ Currently there is no easy way for adding extentions to the editor, this will ho
 In the test folder there is a index.html file. Your editor probably has an extension that can easily serve this file for you. In case you are using VSCode, you can use the Live Server Extension. 
 
 ## 📍 Roadmap 
-[x] Tooltip functionality
-[] Linting by codemirror-lang-sparql
-[] Autocomplete functionality
-[] Extensible extensions
+[x] Tooltip functionality <br />
+[] Linting by codemirror-lang-sparql <br />
+[] Autocomplete functionality <br />
+[] Extensible extensions <br />
 
 # :orange_heart: Contributing
 
