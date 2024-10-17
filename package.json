@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "codemirror": "^6.0.1",
-    "codemirror-lang-sparql": "^1.0.0",
+    "codemirror-lang-sparql": "^2.0.0",
     "sparqljs": "^3.7.1"
   }
 }
