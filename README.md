@@ -86,9 +86,10 @@ Formatting silently no-ops if the query has syntax errors.
 
 Pass any CodeMirror 6 extensions via the `extensions` prop. They are loaded after the built-in defaults, so they can override themes, keymaps, or other behaviour.
 
+Import CodeMirror primitives (`EditorView`, `StateField`, `StateEffect`, etc.) from `sparql-editor` when building extensions:
+
 ```js
-import { createSparqlEditor } from "sparql-editor";
-import { EditorView } from "@codemirror/view";
+import { createSparqlEditor, EditorView } from "sparql-editor";
 
 const myTheme = EditorView.theme({ "&": { fontSize: "14px" } });
 
@@ -101,8 +102,7 @@ const editor = createSparqlEditor({
 For full control, the built-in extension set is also exported so you can compose your own:
 
 ```js
-import { defaultExtensions } from "sparql-editor";
-import { EditorView } from "@codemirror/view";
+import { defaultExtensions, EditorView } from "sparql-editor";
 
 const editor = new EditorView({
   parent: document.getElementById("editor"),
