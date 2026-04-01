@@ -1,6 +1,7 @@
 import { hoverTooltip } from "@codemirror/view";
 import { syntaxTree } from "@codemirror/language";
 import { dictionary } from "../data";
+import "./tooltip.css";
 
 /**
  * Provides a hover tooltip for words in the editor.
@@ -33,24 +34,37 @@ export const wordHover = hoverTooltip((view, pos, side) => {
     pos: start,
     end,
     above: true,
-    create(view) {
+    create() {
       const selection = dictionary[selectionName];
 
-      // HTML template for the tooltip content with improved styling
-      const htmlTemplate = `
-        <div style="padding: 12px; background-color: #f9f9f9; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-          <div style="display: inline-block; padding: 2px 4px; background-color: #e0e0e0; color: black; border-radius: 4px; font-size: small; margin-bottom: 8px;">${selection?.type}</div>
-          <div style="font-weight: medium; margin-bottom: 8px;">${selection?.description}</div>
-          <pre style="display: block; background-color: #eaeaea; padding: 6px; border-radius: 3px; margin-bottom: 8px;">${selection?.example}</pre>
-          <hr style="border: none; border-top: 1px solid #ddd; margin: 12px 0;">
-          <a href="${selection.link}" target="_blank" rel="noopener noreferrer" style="color: #007acc; text-decoration: none; margin-top: 8px;">${selectionName} Documentation</a>
-        </div>
-      `;
+      const container = document.createElement("div");
+      container.className = "sparql-tooltip";
 
-      const dom = document.createElement("div");
-      dom.innerHTML = htmlTemplate;
+      const typeBadge = document.createElement("div");
+      typeBadge.className = "sparql-tooltip__type";
+      typeBadge.textContent = selection.type;
 
-      return { dom };
+      const description = document.createElement("div");
+      description.className = "sparql-tooltip__description";
+      description.textContent = selection.description;
+
+      const example = document.createElement("pre");
+      example.className = "sparql-tooltip__example";
+      example.textContent = selection.example;
+
+      const divider = document.createElement("hr");
+      divider.className = "sparql-tooltip__divider";
+
+      const link = document.createElement("a");
+      link.className = "sparql-tooltip__link";
+      link.href = selection.link;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = `${selectionName} Documentation`;
+
+      container.append(typeBadge, description, example, divider, link);
+
+      return { dom: container };
     }
   };
 });

@@ -1,0 +1,41 @@
+.sparql-tooltip {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sparql-tooltip__type {
+  display: inline-block;
+  padding: 2px 4px;
+  background-color: #e0e0e0;
+  color: black;
+  border-radius: 4px;
+  font-size: small;
+  margin-bottom: 8px;
+}
+
+.sparql-tooltip__description {
+  font-weight: medium;
+  margin-bottom: 8px;
+}
+
+.sparql-tooltip__example {
+  display: block;
+  background-color: #eaeaea;
+  padding: 6px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.sparql-tooltip__divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 12px 0;
+}
+
+.sparql-tooltip__link {
+  color: #007acc;
+  text-decoration: none;
+  margin-top: 8px;
+}
