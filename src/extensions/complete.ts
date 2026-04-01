@@ -1,5 +1,4 @@
 import { Completion, CompletionResult, CompletionContext } from '@codemirror/autocomplete';
-import { SyntaxNode } from '@lezer/common';
 import { syntaxTree } from '@codemirror/language';
 import { dictionary } from '../data';
 
@@ -23,33 +22,30 @@ export function keywordCompletionSource(context: CompletionContext) {
 
 /**
  * Provides local variable completions within a SPARQL query.
+ * Scans the full document syntax tree for all Var nodes so that variables
+ * used anywhere (WHERE clause, FILTER, BIND, OPTIONAL, etc.) are suggested
+ * when typing in any position, including the SELECT clause.
  * @param {CompletionContext} context - The context in which completion is requested.
  * @returns {CompletionResult | null} - A completion result containing variable options or null if no completion is applicable.
  */
 export function localCompletionSource(context: CompletionContext): CompletionResult | null {
-  const inner = syntaxTree(context.state).resolveInner(context.pos, -1);
-  const read = (node: SyntaxNode) => context.state.doc.sliceString(node.from, node.to);
+  const word = context.matchBefore(/\?\w*/);
+  if (!word || (word.from === word.to && !context.explicit)) return null;
 
-  let options: Completion[] = [];
-  for (let pos: SyntaxNode | null = inner; pos; pos = pos.parent) {
-    if (pos.name === "SelectQuery") {
-      const selectClause = pos.getChild("SelectClause");
-      if (selectClause) {
-        const vars = selectClause.getChildren('Var');
-        options = vars.map((item) => ({
-          type: "variable",
-          label: read(item),
-          boost: 99
-        }));
+  const seen = new Set<string>();
+  const options: Completion[] = [];
+
+  syntaxTree(context.state).cursor().iterate(node => {
+    if (node.name === "Var") {
+      const label = context.state.doc.sliceString(node.from, node.to);
+      if (!seen.has(label)) {
+        seen.add(label);
+        options.push({ type: "variable", label, boost: 99 });
       }
-      break; // Exit loop early since we found the SelectQuery
     }
-  }
+  });
 
   if (options.length === 0) return null;
 
-  return {
-    options,
-    from: inner.from
-  };
+  return { from: word.from, options };
 }
