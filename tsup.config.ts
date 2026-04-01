@@ -7,4 +7,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   injectStyle: true,
+  noExternal: ["codemirror", "codemirror-lang-sparql"],
 });
