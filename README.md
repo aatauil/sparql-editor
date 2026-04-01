@@ -73,11 +73,11 @@ deleting extensions and updating the index.ts file accordingly.
 
 In the test folder there is a index.html file. Your editor probably has an extension that can easily serve this file (html) for you. In case you are using VSCode, we recommend the Live Server Extension. 
 
-## 📍 Roadmap 
-[x] Tooltip functionality <br />
-[] Linting by codemirror-lang-sparql <br />
-[] Autocomplete functionality <br />
-[] Extensible extensions <br />
+## 📍 Roadmap
+- [x] Tooltip functionality
+- [x] Linting (via SPARQL.js)
+- [x] Autocomplete (keywords + local variables)
+- [ ] Extensible extensions API
 
 # License
 
