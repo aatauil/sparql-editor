@@ -1,32 +1,34 @@
 import { Parser } from 'sparqljs';
+import { EditorView } from '@codemirror/view';
+import { Diagnostic } from '@codemirror/lint';
 
 // Initialize the SPARQL parser
 const parser = new Parser();
 
 /**
  * Calculate the position in the document based on line and character.
- * @param {CodeMirror.Editor} editor - The CodeMirror editor instance.
+ * @param {EditorView} editor - The CodeMirror editor instance.
  * @param {Object} position - An object containing line and character information.
  * @returns {number} - The calculated position in the document.
  */
-function pos(editor, { line, ch }) {
+function pos(editor: EditorView, { line, ch }: { line: number; ch: number }): number {
   const doc = editor.state.doc;
   return doc.line(line + 1).from + ch;
 }
 
 /**
  * Lint function for SPARQL queries in the CodeMirror editor.
- * @param {CodeMirror.Editor} editor - The CodeMirror editor instance.
+ * @param {EditorView} editor - The CodeMirror editor instance.
  * @returns {Diagnostic[]} - An array of diagnostics containing error information.
  */
-export function sparqlLinter(editor) {
-  const diagnostics = [];
+export function sparqlLinter(editor: EditorView): Diagnostic[] {
+  const diagnostics: Diagnostic[] = [];
   const value = editor.state.doc.toString();
 
   try {
     // Attempt to parse the SPARQL query
     parser.parse(value);
-  } catch (err) {
+  } catch (err: any) {
     const hash = err.hash;
 
     // Push diagnostic information for any parsing errors
@@ -37,6 +39,6 @@ export function sparqlLinter(editor) {
       severity: "error"
     });
   }
-  
+
   return diagnostics;
 }

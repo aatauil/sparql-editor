@@ -46,6 +46,8 @@ export function localCompletionSource(context: CompletionContext): CompletionRes
     }
   }
 
+  if (options.length === 0) return null;
+
   return {
     options,
     from: inner.from
