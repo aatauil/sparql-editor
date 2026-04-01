@@ -54,7 +54,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?s ?p ?o WHERE {
   ?sub ?pred ?obj .
-} LIMIT 10
+} LIMIT 100
 `;
 
 /**
