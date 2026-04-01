@@ -7,6 +7,7 @@ import { SparqlLanguage, sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
 import { wordHover } from "./extensions/tooltip";
 import { keywordCompletionSource, localCompletionSource } from "./extensions/complete";
+import { formatQuery, formatKeymap } from "./extensions/formatter";
 
 /**
  * Type definition for the properties required to create a SPARQL editor.
@@ -43,7 +44,8 @@ const defaultExtensions = [
   linter(sparqlLinter),
   sparqlKeywordCompletions,
   sparqlLocalCompletions,
-  wordHover
+  wordHover,
+  formatKeymap
 ];
 
 /** 
@@ -62,6 +64,8 @@ SELECT ?s ?p ?o WHERE {
  * @param {Props} props - The properties for creating the editor.
  * @returns {EditorView} - The created editor view instance.
  */
+export { formatQuery };
+
 export function createSparqlEditor({ parent, onChange, value }: Props): EditorView {
   const extensions = [...defaultExtensions];
   const doc = value || defaultDoc;
