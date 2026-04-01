@@ -1,4 +1,5 @@
 import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
+import { Extension } from "@codemirror/state";
 import { indentWithTab } from "@codemirror/commands";
 import { search } from "@codemirror/search";
 import { linter, lintGutter } from "@codemirror/lint";
@@ -15,7 +16,8 @@ import { formatQuery, formatKeymap } from "./extensions/formatter";
 export type Props = {
   parent: HTMLElement,
   onChange?: (value: string, viewUpdate: ViewUpdate) => void,
-  value?: string
+  value?: string,
+  extensions?: Extension[]
 }
 
 /** 
@@ -35,7 +37,7 @@ const sparqlLocalCompletions = SparqlLanguage.data.of({
 /**
  * Default extensions for the CodeMirror editor setup.
  */
-const defaultExtensions = [
+export const defaultExtensions: Extension[] = [
   basicSetup,
   keymap.of([indentWithTab]),
   sparql(),
@@ -66,7 +68,7 @@ SELECT ?s ?p ?o WHERE {
  */
 export { formatQuery };
 
-export function createSparqlEditor({ parent, onChange, value }: Props): EditorView {
+export function createSparqlEditor({ parent, onChange, value, extensions: userExtensions }: Props): EditorView {
   const extensions = [...defaultExtensions];
   const doc = value || defaultDoc;
 
@@ -76,6 +78,10 @@ export function createSparqlEditor({ parent, onChange, value }: Props): EditorVi
         onChange(viewUpdate.state.doc.toString(), viewUpdate);
       }
     }));
+  }
+
+  if (userExtensions) {
+    extensions.push(...userExtensions);
   }
 
   return new EditorView({ parent, doc, extensions });
