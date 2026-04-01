@@ -2,11 +2,11 @@ import { EditorView, keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
 import { search } from "@codemirror/search";
 import { linter, lintGutter } from "@codemirror/lint";
-import { sparqlLinter } from "./extentions/sparql-linter";
+import { sparqlLinter } from "./extensions/sparql-linter";
 import { SparqlLanguage, sparql } from "codemirror-lang-sparql";
 import { basicSetup } from "codemirror";
-import { wordHover } from "./extentions/tooltip";
-import { keywordCompletionSource, localCompletionSource } from "./extentions/complete";
+import { wordHover } from "./extensions/tooltip";
+import { keywordCompletionSource, localCompletionSource } from "./extensions/complete";
 
 /** 
  * Type definition for the properties required to create a SPARQL editor.
