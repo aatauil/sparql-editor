@@ -66,7 +66,9 @@ SELECT ?s ?p ?o WHERE {
  * @param {Props} props - The properties for creating the editor.
  * @returns {EditorView} - The created editor view instance.
  */
-export { formatQuery };
+export { formatQuery, EditorView, keymap };
+export { StateField, StateEffect } from "@codemirror/state";
+export type { Extension } from "@codemirror/state";
 
 export function createSparqlEditor({ parent, onChange, value, extensions: userExtensions }: Props): EditorView {
   const extensions = [...defaultExtensions];
