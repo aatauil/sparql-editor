@@ -69,9 +69,9 @@ deleting extensions and updating the index.ts file accordingly.
 - clone this repo
 - `cd` into it
 - run `npm install`
-- run `npm run dev` 
+- run `npm run dev`
 
-In the test folder there is a index.html file. Your editor probably has an extension that can easily serve this file (html) for you. In case you are using VSCode, we recommend the Live Server Extension. 
+This will start the TypeScript compiler in watch mode and automatically open `test/index.html` in your browser at `http://127.0.0.1:8080/test/index.html`. Hard-refresh the browser after making changes to see them reflected.
 
 ## 📍 Roadmap
 - [x] Tooltip functionality
