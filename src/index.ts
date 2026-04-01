@@ -1,4 +1,4 @@
-import { EditorView, keymap } from "@codemirror/view";
+import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
 import { search } from "@codemirror/search";
 import { linter, lintGutter } from "@codemirror/lint";
@@ -8,13 +8,13 @@ import { basicSetup } from "codemirror";
 import { wordHover } from "./extensions/tooltip";
 import { keywordCompletionSource, localCompletionSource } from "./extensions/complete";
 
-/** 
+/**
  * Type definition for the properties required to create a SPARQL editor.
  */
-type Props = {
+export type Props = {
   parent: HTMLElement,
-  onChange: (value: string, viewUpdate: any) => void,
-  value: string
+  onChange?: (value: string, viewUpdate: ViewUpdate) => void,
+  value?: string
 }
 
 /** 
@@ -31,7 +31,7 @@ const sparqlLocalCompletions = SparqlLanguage.data.of({
   autocomplete: localCompletionSource
 });
 
-/** 
+/**
  * Default extensions for the CodeMirror editor setup.
  */
 const defaultExtensions = [
@@ -42,7 +42,8 @@ const defaultExtensions = [
   lintGutter(),
   linter(sparqlLinter),
   sparqlKeywordCompletions,
-  sparqlLocalCompletions
+  sparqlLocalCompletions,
+  wordHover
 ];
 
 /** 
@@ -65,16 +66,12 @@ export function createSparqlEditor({ parent, onChange, value }: Props): EditorVi
   const extensions = [...defaultExtensions];
   const doc = value || defaultDoc;
 
-  if (typeof onChange === 'function') {
-    const updateListener = EditorView.updateListener.of((viewUpdate) => {
+  if (onChange) {
+    extensions.push(EditorView.updateListener.of((viewUpdate: ViewUpdate) => {
       if (viewUpdate.docChanged) {
-        const doc = viewUpdate.state.doc;
-        const value = doc.toString();
-        onChange(value, viewUpdate);
+        onChange(viewUpdate.state.doc.toString(), viewUpdate);
       }
-    });
-
-    extensions.push(updateListener, wordHover);
+    }));
   }
 
   return new EditorView({ parent, doc, extensions });
