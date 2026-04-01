@@ -23,6 +23,7 @@
 - 💢 Linting
 - 🔎 Search Functionality
 - 🔽 Tooltips
+- ✨ Query Formatting
 
 ## 📚 Documentation
 
@@ -58,11 +59,31 @@ This editor instance leverages CodeMirror 6 with sensible defaults and enhanced 
 |---|---|---|---|
 | parent | html dom element to attach editor to | / | required
 | onChange | function that gets called whenever editor value changes  | / |   |
-| value |  Initial value of editor | https://github.com/aatauil/sparql-editor/blob/4732494949e44910d8ca45d0391331b520ae9ee0/src/index.ts#L32-L37  |  |
+| value |  Initial value of editor | `SELECT * WHERE { ?s ?p ?o } LIMIT 100`  |  |
+
+## Formatting
+
+The editor includes built-in SPARQL query formatting powered by [sparqljs](https://github.com/RubenVerborgh/SPARQL.js).
+
+**Keyboard shortcut:** `Shift + Alt + F`
+
+**Programmatic access:** `formatQuery` is exported so you can trigger formatting from your own UI (e.g. a button):
+
+```js
+import { createSparqlEditor, formatQuery } from "sparql-editor"
+
+const editor = createSparqlEditor({ parent: domElement });
+
+document.getElementById("format-btn").addEventListener("click", () => {
+  formatQuery(editor);
+});
+```
+
+Formatting silently no-ops if the query has syntax errors.
 
 ## Extending the editor
-Currently there is no easy way for adding extentions to the editor, this will hopefully be added soon. Until then, the best direction to take is forking this project, installing or 
-deleting extensions and updating the index.ts file accordingly.  
+Currently there is no easy way for adding extensions to the editor, this will hopefully be added soon. Until then, the best direction to take is forking this project, installing or 
+deleting extensions and updating the index.ts file accordingly.
 
 ## Development guide
 
@@ -77,6 +98,7 @@ This will start the TypeScript compiler in watch mode and automatically open `te
 - [x] Tooltip functionality
 - [x] Linting (via SPARQL.js)
 - [x] Autocomplete (keywords + local variables)
+- [x] Query formatting (via SPARQL.js)
 - [ ] Extensible extensions API
 
 # License
