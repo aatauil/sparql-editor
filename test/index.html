@@ -7,11 +7,11 @@
   <title>Document</title>
 </head>
 <body>
-  Editor
+  <button onclick="window.sparqlEditor.formatQuery(editor)">Format</button>
   <div id="editor"></div>
   <script src="../dist/index.global.js"></script>
-  <script>       
-      const { createSparqlEditor } = window.sparqlEditor;
+  <script>
+      const { createSparqlEditor, formatQuery } = window.sparqlEditor;
       const editor = createSparqlEditor({
         parent: document.getElementById("editor"),
         onChange: onChange
@@ -20,9 +20,8 @@
       function onChange(e) {
         console.log(e)
       }
-      
-      console.log(editor)
 
+      console.log(editor)
   </script>
 </body>
 </html>
