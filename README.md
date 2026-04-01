@@ -60,6 +60,7 @@ This editor instance leverages CodeMirror 6 with sensible defaults and enhanced 
 | parent | html dom element to attach editor to | / | required
 | onChange | function that gets called whenever editor value changes  | / |   |
 | value |  Initial value of editor | `SELECT * WHERE { ?s ?p ?o } LIMIT 100`  |  |
+| extensions | additional CodeMirror 6 extensions to load alongside the built-in ones | `[]` | |
 
 ## Formatting
 
@@ -82,8 +83,32 @@ document.getElementById("format-btn").addEventListener("click", () => {
 Formatting silently no-ops if the query has syntax errors.
 
 ## Extending the editor
-Currently there is no easy way for adding extensions to the editor, this will hopefully be added soon. Until then, the best direction to take is forking this project, installing or 
-deleting extensions and updating the index.ts file accordingly.
+
+Pass any CodeMirror 6 extensions via the `extensions` prop. They are loaded after the built-in defaults, so they can override themes, keymaps, or other behaviour.
+
+```js
+import { createSparqlEditor } from "sparql-editor";
+import { EditorView } from "@codemirror/view";
+
+const myTheme = EditorView.theme({ "&": { fontSize: "14px" } });
+
+const editor = createSparqlEditor({
+  parent: document.getElementById("editor"),
+  extensions: [myTheme]
+});
+```
+
+For full control, the built-in extension set is also exported so you can compose your own:
+
+```js
+import { defaultExtensions } from "sparql-editor";
+import { EditorView } from "@codemirror/view";
+
+const editor = new EditorView({
+  parent: document.getElementById("editor"),
+  extensions: [...defaultExtensions, myCustomExtension]
+});
+```
 
 ## Development guide
 
@@ -99,7 +124,7 @@ This will start the TypeScript compiler in watch mode and automatically open `te
 - [x] Linting (via SPARQL.js)
 - [x] Autocomplete (keywords + local variables)
 - [x] Query formatting (via SPARQL.js)
-- [ ] Extensible extensions API
+- [x] Extensible extensions API
 
 # License
 
